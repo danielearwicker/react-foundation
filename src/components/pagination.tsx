@@ -1,5 +1,5 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import * as React from 'react';
+import * as PropTypes from 'prop-types';
 import { GeneralPropTypes, FlexboxPropTypes, createClassName, generalClassNames, removeProps, objectKeys } from '../utils';
 
 /**
@@ -9,7 +9,7 @@ import { GeneralPropTypes, FlexboxPropTypes, createClassName, generalClassNames,
  * @param {Object} props
  * @returns {Object}
  */
-export const Pagination = (props) => {
+export const Pagination: React.StatelessComponent<PaginationProps> = (props) => {
   const className = createClassName(
     props.noDefaultClassName ? null : 'pagination',
     props.className,
@@ -19,9 +19,13 @@ export const Pagination = (props) => {
     generalClassNames(props)
   );
 
-  const passProps = removeProps(props, objectKeys(Pagination.propTypes));
+  const passProps = removeProps(props, objectKeys(Pagination.propTypes!));
 
   return <ul {...passProps} className={className} role="navigation"/>;
+};
+
+export interface PaginationProps extends FlexboxPropTypes, React.HTMLAttributes<HTMLUListElement> {
+  isCentered?: boolean;
 };
 
 Pagination.propTypes = {
@@ -36,7 +40,7 @@ Pagination.propTypes = {
  * @param {Object} props
  * @returns {Object}
  */
-export const PaginationItem = (props) => {
+export const PaginationItem: React.StatelessComponent<PaginationItemProps> = (props) => {
   const className = createClassName(
     props.className,
     {
@@ -46,9 +50,14 @@ export const PaginationItem = (props) => {
     generalClassNames(props)
   );
 
-  const passProps = removeProps(props, objectKeys(PaginationItem.propTypes));
+  const passProps = removeProps(props, objectKeys(PaginationItem.propTypes!));
 
   return <li {...passProps} className={className}/>;
+};
+
+export interface PaginationItemProps extends FlexboxPropTypes, React.HTMLAttributes<HTMLLIElement> {
+  isCurrent?: boolean;
+  isDisabled?: boolean;
 };
 
 PaginationItem.propTypes = {
@@ -64,7 +73,7 @@ PaginationItem.propTypes = {
  * @param {Object} props
  * @returns {Object}
  */
-export const PaginationPrevious = (props) => {
+export const PaginationPrevious: React.StatelessComponent<PaginationItemProps> = (props) => {
   const className = createClassName(
     props.noDefaultClassName ? null : 'pagination-previous',
     props.className,
@@ -80,7 +89,7 @@ export const PaginationPrevious = (props) => {
  * @param {Object} props
  * @returns {Object}
  */
-export const PaginationNext = (props) => {
+export const PaginationNext: React.StatelessComponent<PaginationItemProps> = (props) => {
   const className = createClassName(
     props.noDefaultClassName ? null : 'pagination-next',
     props.className,
@@ -96,7 +105,7 @@ export const PaginationNext = (props) => {
  * @param {Object} props
  * @returns {Object}
  */
-export const PaginationEllipsis = (props) => {
+export const PaginationEllipsis: React.StatelessComponent<PaginationItemProps> = (props) => {
   const className = createClassName(
     props.noDefaultClassName ? null : 'ellipsis',
     props.className,

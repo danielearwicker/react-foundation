@@ -50,6 +50,9 @@
   },
   "homepage": "https://github.com/nordsoftware/react-foundation#readme",
   "dependencies": {
+    "@types/classnames": "^2.2.3",
+    "@types/prop-types": "^15.5.1",
+    "@types/react": "^16.0.5",
     "classnames": "^2.2.3",
     "prop-types": "^15.5.10"
   },

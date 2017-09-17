@@ -1,5 +1,5 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import * as React from 'react';
+import * as PropTypes from 'prop-types';
 import { GeneralPropTypes, FlexboxPropTypes, createClassName, generalClassNames, removeProps, objectKeys } from '../utils';
 
 /**
@@ -9,7 +9,7 @@ import { GeneralPropTypes, FlexboxPropTypes, createClassName, generalClassNames,
  * @param {Object} props
  * @returns {Object}
  */
-export const Tabs = (props) => {
+export const Tabs: React.StatelessComponent<TabsProps> = (props) => {
   const className = createClassName(
     props.noDefaultClassName ? null : 'tabs',
     props.className,
@@ -19,9 +19,13 @@ export const Tabs = (props) => {
     generalClassNames(props)
   );
 
-  const passProps = removeProps(props, objectKeys(Tabs.propTypes));
+  const passProps = removeProps(props, objectKeys(Tabs.propTypes!));
 
   return <ul {...passProps} className={className}/>;
+};
+
+export interface TabsProps extends FlexboxPropTypes, React.HTMLAttributes<HTMLUListElement> {  
+  isVertical?: boolean;
 };
 
 Tabs.propTypes = {
@@ -36,7 +40,7 @@ Tabs.propTypes = {
  * @param {Object} props
  * @returns {Object}
  */
-export const TabItem = (props) => {
+export const TabItem: React.StatelessComponent<TabItemProps> = (props) => {
   const className = createClassName(
     props.noDefaultClassName ? null : 'tabs-title',
     props.className,
@@ -46,9 +50,13 @@ export const TabItem = (props) => {
     generalClassNames(props)
   );
 
-  const passProps = removeProps(props, objectKeys(TabItem.propTypes));
+  const passProps = removeProps(props, objectKeys(TabItem.propTypes!));
 
   return <li {...passProps} className={className}/>;
+};
+
+export interface TabItemProps extends FlexboxPropTypes, React.HTMLAttributes<HTMLLIElement> {
+  isActive?: boolean;
 };
 
 TabItem.propTypes = {
@@ -63,7 +71,7 @@ TabItem.propTypes = {
  * @param {Object} props
  * @returns {Object}
  */
-export const TabsContent = (props) => {
+export const TabsContent: React.StatelessComponent<TabsContentProps> = (props) => {
   const className = createClassName(
     props.noDefaultClassName ? null : 'tabs-content',
     props.className,
@@ -73,9 +81,14 @@ export const TabsContent = (props) => {
     generalClassNames(props)
   );
 
-  const passProps = removeProps(props, objectKeys(TabsContent.propTypes));
+  const passProps = removeProps(props, objectKeys(TabsContent.propTypes!));
 
   return <div {...passProps} className={className}/>;
+};
+
+export interface TabsContentProps extends FlexboxPropTypes, React.HTMLAttributes<HTMLDivElement> {
+  isActive?: boolean;
+  isVertical?: boolean;
 };
 
 TabsContent.propTypes = {
@@ -91,7 +104,7 @@ TabsContent.propTypes = {
  * @param {Object} props
  * @returns {Object}
  */
-export const TabPanel = (props) => {
+export const TabPanel: React.StatelessComponent<TabPanelProps> = (props) => {
   const className = createClassName(
     props.noDefaultClassName ? null : 'tabs-panel',
     props.className,
@@ -101,9 +114,13 @@ export const TabPanel = (props) => {
     generalClassNames(props)
   );
 
-  const passProps = removeProps(props, objectKeys(TabPanel.propTypes));
+  const passProps = removeProps(props, objectKeys(TabPanel.propTypes!));
 
   return <div {...passProps} className={className}/>;
+};
+
+export interface TabPanelProps extends FlexboxPropTypes, React.HTMLAttributes<HTMLDivElement> {
+  isActive?: boolean;
 };
 
 TabPanel.propTypes = {

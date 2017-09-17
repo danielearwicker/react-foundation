@@ -1,6 +1,7 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import { TopBar } from './top-bar';
+import * as React from 'react';
+import { Component } from 'react';
+import * as PropTypes from 'prop-types';
+import { TopBar, TopBarProps } from './top-bar';
 import { GeneralPropTypes, FlexboxPropTypes, createClassName, generalClassNames, removeProps } from '../utils';
 
 // Default pixel value when title bar is displayed and top bar is hidden.
@@ -10,7 +11,7 @@ const DEFAULT_BREAKPOINT = 640;
  * Responsive navigation component.
  * http://foundation.zurb.com/sites/docs/responsive-navigation.html
  */
-export class ResponsiveNavigation extends Component {
+export class ResponsiveNavigation extends Component<ResponsiveNavigationProps, ResponsiveNavigationState> {
   constructor() {
     super();
 
@@ -44,8 +45,8 @@ export class ResponsiveNavigation extends Component {
     const { breakpoint } = this.props;
 
     this.setState({
-      isTitleBarVisible: window.innerWidth < breakpoint,
-      isTopBarVisible: window.innerWidth >= breakpoint
+      isTitleBarVisible: window.innerWidth < breakpoint!,
+      isTopBarVisible: window.innerWidth >= breakpoint!
     });
   }
 
@@ -84,16 +85,29 @@ export class ResponsiveNavigation extends Component {
       </div>
     );
   }
+
+  static propTypes = {
+    ...GeneralPropTypes,
+    ...FlexboxPropTypes,
+    breakpoint: PropTypes.number.isRequired
+  };
+  
+  static defaultProps = {
+    breakpoint: DEFAULT_BREAKPOINT
+  };
 }
 
-ResponsiveNavigation.propTypes = {
-  ...GeneralPropTypes,
-  ...FlexboxPropTypes,
-  breakpoint: PropTypes.number.isRequired
-};
+export interface ResponsiveNavigationState {
+  isTitleBarVisible: boolean;
+  isTopBarVisible: boolean;
+}
 
-ResponsiveNavigation.defaultProps = {
-  breakpoint: DEFAULT_BREAKPOINT
+export interface ResponsiveNavigationProps extends FlexboxPropTypes, React.HTMLAttributes<HTMLDivElement> {
+  breakpoint?: number;
+  titleBar?: TitleBarProps;
+  menuIcon?: MenuIconProps;
+  titleBarTitle?: TitleBarTitleProps;
+  topBar?: TopBarProps;
 };
 
 /**
@@ -102,7 +116,7 @@ ResponsiveNavigation.defaultProps = {
  * @param {Object} props
  * @returns {Object}
  */
-export const TitleBar = props => {
+export const TitleBar: React.StatelessComponent<TitleBarProps> = props => {
   const className = createClassName(
     props.noDefaultClassName ? null : 'title-bar',
     props.className,
@@ -114,13 +128,15 @@ export const TitleBar = props => {
   );
 };
 
+export interface TitleBarProps extends GeneralPropTypes, React.HTMLAttributes<HTMLDivElement> { }
+
 /**
  * Title bar menu icon sub-component.
  *
  * @param {Object} props
  * @returns {Object}
  */
-export const MenuIcon = props => {
+export const MenuIcon: React.StatelessComponent<MenuIconProps>  = props => {
   const className = createClassName(
     props.noDefaultClassName ? null : 'menu-icon',
     props.className,
@@ -132,13 +148,15 @@ export const MenuIcon = props => {
   );
 };
 
+export interface MenuIconProps extends GeneralPropTypes, React.ButtonHTMLAttributes<HTMLButtonElement> { }
+
 /**
  * Title bar title sub-component.
  *
  * @param {Object} props
  * @returns {Object}
  */
-export const TitleBarTitle = props => {
+export const TitleBarTitle: React.StatelessComponent<TitleBarTitleProps>  = props => {
   const className = createClassName(
     props.noDefaultClassName ? null : 'title-bar-title',
     props.className,
@@ -149,3 +167,5 @@ export const TitleBarTitle = props => {
     <div {...props} className={className}/>
   );
 };
+
+export interface TitleBarTitleProps extends GeneralPropTypes, React.HTMLAttributes<HTMLDivElement> { }

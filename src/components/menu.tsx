@@ -1,5 +1,5 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import * as React from 'react';
+import * as PropTypes from 'prop-types';
 import { MenuAlignments } from '../enums';
 import { GeneralPropTypes, FlexboxPropTypes, createClassName, generalClassNames, removeProps, objectKeys, objectValues } from '../utils';
 
@@ -10,7 +10,7 @@ import { GeneralPropTypes, FlexboxPropTypes, createClassName, generalClassNames,
  * @param {Object} props
  * @returns {Object}
  */
-export const Menu = (props) => {
+export const Menu: React.StatelessComponent<MenuProps> = (props) => {
   const className = createClassName(
     props.noDefaultClassName ? null : 'menu',
     props.className,
@@ -28,9 +28,20 @@ export const Menu = (props) => {
     generalClassNames(props)
   );
 
-  const passProps = removeProps(props, objectKeys(Menu.propTypes));
+  const passProps = removeProps(props, objectKeys(Menu.propTypes!));
 
   return <ul {...passProps} className={className}/>;
+};
+
+export interface MenuProps extends FlexboxPropTypes, React.HTMLAttributes<HTMLUListElement> {
+  alignment?: MenuAlignments;
+  iconsOnTop?: boolean;
+  isExpanded?: boolean;
+  isVertical?: boolean;
+  isDropdown?: boolean;
+  isSimple?: boolean;
+  isNested?: boolean;
+  horizontalOnMedium?: boolean;
 };
 
 Menu.propTypes = {
@@ -52,7 +63,7 @@ Menu.propTypes = {
  * @param {Object} props
  * @returns {Object}
  */
-export const MenuItem = (props) => {
+export const MenuItem: React.StatelessComponent<MenuItemProps> = (props) => {
   const className = createClassName(
     props.className,
     {
@@ -61,9 +72,13 @@ export const MenuItem = (props) => {
     generalClassNames(props)
   );
 
-  const passProps = removeProps(props, objectKeys(MenuItem.propTypes));
+  const passProps = removeProps(props, objectKeys(MenuItem.propTypes!));
 
   return <li {...passProps} className={className}/>;
+};
+
+export interface MenuItemProps extends FlexboxPropTypes, React.HTMLAttributes<HTMLLIElement> {
+  isActive?: boolean;
 };
 
 MenuItem.propTypes = {
@@ -78,6 +93,6 @@ MenuItem.propTypes = {
  * @param {Object} props
  * @returns {XML}
  */
-export const MenuText = (props) => (
+export const MenuText = (props: MenuItemProps) => (
   <MenuItem {...props} className={props.className || 'menu-text'}/>
 );

@@ -1,5 +1,5 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import * as React from 'react';
+import * as PropTypes from 'prop-types';
 import { HorizontalAlignments } from '../enums';
 import { GeneralPropTypes, FlexboxPropTypes, createClassName, generalClassNames, removeProps, objectKeys, objectValues } from '../utils';
 
@@ -9,7 +9,7 @@ import { GeneralPropTypes, FlexboxPropTypes, createClassName, generalClassNames,
  * @param {Object} props
  * @returns {Object}
  */
-export const MediaObject = (props) => {
+export const MediaObject: React.StatelessComponent<MediaObjectProps> = (props) => {
   const className = createClassName(
     props.noDefaultClassName ? null : 'media-object',
     props.className,
@@ -19,9 +19,13 @@ export const MediaObject = (props) => {
     generalClassNames(props)
   );
 
-  const passProps = removeProps(props, objectKeys(MediaObject.propTypes));
+  const passProps = removeProps(props, objectKeys(MediaObject.propTypes!));
 
   return <div {...passProps} className={className}/>;
+};
+
+export interface MediaObjectProps extends FlexboxPropTypes, React.HTMLAttributes<HTMLDivElement> { 
+  stackForSmall?: boolean;
 };
 
 MediaObject.propTypes = {
@@ -36,7 +40,7 @@ MediaObject.propTypes = {
  * @param {Object} props
  * @returns {Object}
  */
-export const MediaObjectSection = (props) => {
+export const MediaObjectSection: React.StatelessComponent<MediaObjectSectionProps> = (props) => {
   const className = createClassName(
     props.noDefaultClassName ? null : 'media-object-section',
     props.className,
@@ -52,9 +56,16 @@ export const MediaObjectSection = (props) => {
     generalClassNames(props)
   );
 
-  const passProps = removeProps(props, objectKeys(MediaObjectSection.propTypes));
+  const passProps = removeProps(props, objectKeys(MediaObjectSection.propTypes!));
 
   return <div {...passProps} className={className}/>;
+};
+
+export interface MediaObjectSectionProps extends FlexboxPropTypes, React.HTMLAttributes<HTMLDivElement> { 
+  alignment?: HorizontalAlignments;
+  isMain?: boolean;
+  isMiddle?: boolean;
+  isBottom?: boolean;
 };
 
 MediaObjectSection.propTypes = {

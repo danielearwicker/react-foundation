@@ -1,24 +1,24 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import * as React from 'react';
+import * as PropTypes from 'prop-types';
 import { GeneralPropTypes, FlexboxPropTypes, createClassName, generalClassNames, removeProps, objectKeys } from '../utils';
 
 /**
  * Accordion component.
  * http://foundation.zurb.com/sites/docs/accordion.html
- *
- * @param {Object} props
- * @returns {Object}
- */
-export const Accordion = (props) => {
+  */
+export const Accordion: React.StatelessComponent<AccordianProps> = (props) => {
   const className = createClassName(
     props.noDefaultClassName ? null : 'accordion',
     props.className,
     generalClassNames(props)
   );
 
-  const passProps = removeProps(props, objectKeys(Accordion.propTypes));
+  const passProps = removeProps(props, objectKeys(Accordion.propTypes!));
 
   return <ul {...passProps} className={className}>{props.children || []}</ul>;
+};
+
+export interface AccordianProps extends FlexboxPropTypes, React.HTMLAttributes<HTMLUListElement> {  
 };
 
 Accordion.propTypes = {
@@ -29,11 +29,8 @@ Accordion.propTypes = {
 
 /**
  * Accordion item component.
- *
- * @param {Object} props
- * @returns {Object}
  */
-export const AccordionItem = (props) => {
+export const AccordionItem: React.StatelessComponent<AccordianItemProps> = (props) => {
   const className = createClassName(
     props.noDefaultClassName ? null : 'accordion-item',
     props.className,
@@ -43,9 +40,13 @@ export const AccordionItem = (props) => {
     generalClassNames(props)
   );
 
-  const passProps = removeProps(props, objectKeys(AccordionItem.propTypes));
+  const passProps = removeProps(props, objectKeys(AccordionItem.propTypes!));
 
   return <li {...passProps} className={className}/>;
+};
+
+export interface AccordianItemProps extends FlexboxPropTypes, React.HTMLAttributes<HTMLLIElement> {
+  isActive?: boolean;
 };
 
 AccordionItem.propTypes = {
@@ -56,11 +57,8 @@ AccordionItem.propTypes = {
 
 /**
  * Accordion panel container component.
- *
- * @param {Object} props
- * @returns {Object}
  */
-export const AccordionContent = (props) => {
+export const AccordionContent: React.StatelessComponent<AccordianContentProps> = (props) => {
   const className = createClassName(
     props.noDefaultClassName ? null : 'accordion-content',
     props.className,
@@ -70,9 +68,13 @@ export const AccordionContent = (props) => {
     generalClassNames(props)
   );
 
-  const passProps = removeProps(props, objectKeys(AccordionContent.propTypes));
+  const passProps = removeProps(props, objectKeys(AccordionContent.propTypes!));
 
   return <div {...passProps} className={className}/>;
+};
+
+export interface AccordianContentProps extends FlexboxPropTypes, React.HTMLAttributes<HTMLDivElement> {
+  isActive?: boolean;
 };
 
 AccordionContent.propTypes = {
@@ -83,20 +85,21 @@ AccordionContent.propTypes = {
 
 /**
  * Accordion panel title component.
- *
- * @param {Object} props
- * @returns {Object}
  */
-export const AccordionTitle = (props) => {
+export const AccordionTitle: React.StatelessComponent<AccordionTitleProps> = (props) => {
   const className = createClassName(
     props.noDefaultClassName ? null : 'accordion-title',
     props.className,
     generalClassNames(props)
   );
 
-  const passProps = removeProps(props, objectKeys(AccordionContent.propTypes));
+  const passProps = removeProps(props, objectKeys(AccordionContent.propTypes!));
 
   return <a {...passProps} className={className}/>;
+};
+
+export interface AccordionTitleProps extends FlexboxPropTypes, React.AnchorHTMLAttributes<HTMLAnchorElement> {
+  isActive?: boolean;
 };
 
 AccordionTitle.propTypes = {

@@ -1,5 +1,5 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import * as React from 'react';
+import * as PropTypes from 'prop-types';
 import { CalloutColors, CalloutSizes } from '../enums';
 import { GeneralPropTypes, FlexboxPropTypes, createClassName, generalClassNames, removeProps, objectKeys, objectValues } from '../utils';
 
@@ -10,7 +10,7 @@ import { GeneralPropTypes, FlexboxPropTypes, createClassName, generalClassNames,
  * @param {Object} props
  * @returns {Object}
  */
-export const Callout = props => {
+export const Callout: React.StatelessComponent<CalloutProps> = props => {
   const className = createClassName(
     props.noDefaultClassName ? null : 'callout',
     props.className,
@@ -19,9 +19,14 @@ export const Callout = props => {
     generalClassNames(props)
   );
 
-  const passProps = removeProps(props, objectKeys(Callout.propTypes));
+  const passProps = removeProps(props, objectKeys(Callout.propTypes!));
 
   return <div {...passProps} className={className}/>;
+};
+
+export interface CalloutProps extends FlexboxPropTypes, React.HTMLAttributes<HTMLDivElement> {
+  color?: CalloutColors;
+  size?: CalloutSizes;
 };
 
 Callout.propTypes = {

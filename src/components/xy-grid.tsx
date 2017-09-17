@@ -1,5 +1,5 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import * as React from 'react';
+import * as PropTypes from 'prop-types';
 import { GutterTypes, ExtendedBreakpoints } from '../enums';
 import { GeneralPropTypes, FlexboxPropTypes, createClassName, generalClassNames, removeProps, objectKeys, isDefined, objectValues, addBreakpoint, setDirection } from '../utils';
 
@@ -9,7 +9,7 @@ import { GeneralPropTypes, FlexboxPropTypes, createClassName, generalClassNames,
  * @param {Object} props
  * @returns {Object}
  */
-export const GridContainer = (props) => {
+export const GridContainer: React.StatelessComponent<GridContainerProps> = (props) => {
   const className = createClassName(
     props.noDefaultClassName ? null : 'grid-container',
     props.className,
@@ -20,10 +20,15 @@ export const GridContainer = (props) => {
     generalClassNames(props)
   );
 
-  const passProps = removeProps(props, objectKeys(Grid.propTypes));
+  const passProps = removeProps(props, objectKeys(Grid.propTypes!));
 
   return <div {...passProps} className={className}/>;
 };
+
+export interface GridContainerProps extends FlexboxPropTypes, React.HTMLAttributes<HTMLDivElement> {
+  fluid?: boolean;
+  full?: boolean;
+}
 
 GridContainer.propTypes = {
   ...GeneralPropTypes,
@@ -38,7 +43,7 @@ GridContainer.propTypes = {
  * @param {Object} props
  * @returns {Object}
  */
-export const Grid = (props) => {
+export const Grid: React.StatelessComponent<GridProps> = (props) => {
   const className = createClassName(
     props.noDefaultClassName ? null : setDirection(props.vertical),
     props.className,
@@ -53,10 +58,22 @@ export const Grid = (props) => {
     generalClassNames(props)
   );
 
-  const passProps = removeProps(props, objectKeys(Grid.propTypes));
+  const passProps = removeProps(props, objectKeys(Grid.propTypes!));
 
   return <div {...passProps} className={className}/>;
 };
+
+export interface GridProps extends FlexboxPropTypes, React.HTMLAttributes<HTMLDivElement> {
+  vertical?: boolean;
+  gutters?: GutterTypes;
+  upOnSmall?: number;
+  upOnMedium?: number;
+  upOnLarge?: number;
+  collapseOnSmall?: GutterTypes;
+  collapseOnMedium?: GutterTypes;
+  collapseOnLarge?: GutterTypes;
+  gridFrame?: ExtendedBreakpoints;
+}
 
 Grid.propTypes = {
   ...GeneralPropTypes,
@@ -78,7 +95,7 @@ Grid.propTypes = {
  * @param {Object} props
  * @returns {Object}
  */
-export const Cell = (props) => {
+export const Cell: React.StatelessComponent<CellProps> = (props) => {
   const className = createClassName(
     props.noDefaultClassName ? null : 'cell',
     props.className,
@@ -93,10 +110,21 @@ export const Cell = (props) => {
     generalClassNames(props)
   );
 
-  const passProps = removeProps(props, objectKeys(Cell.propTypes));
+  const passProps = removeProps(props, objectKeys(Cell.propTypes!));
 
   return <div {...passProps} className={className}/>;
 };
+
+export interface CellProps extends FlexboxPropTypes, React.HTMLAttributes<HTMLDivElement> {
+  small?: number;
+  medium?: number;
+  large?: number;
+  auto?: ExtendedBreakpoints;
+  shrink?: ExtendedBreakpoints;
+  offsetOnSmall?: number;
+  offsetOnMedium?: number;
+  offsetOnLarge?: number;
+}
 
 Cell.propTypes = {
   ...GeneralPropTypes,

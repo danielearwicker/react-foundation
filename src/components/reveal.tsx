@@ -1,5 +1,5 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import * as React from 'react';
+import * as PropTypes from 'prop-types';
 import { GeneralPropTypes, FlexboxPropTypes, createClassName, generalClassNames, removeProps, objectKeys } from '../utils';
 
 /**
@@ -10,7 +10,7 @@ import { GeneralPropTypes, FlexboxPropTypes, createClassName, generalClassNames,
  * @returns {Object}
  */
 
-export const Reveal = (props) => {
+export const Reveal: React.StatelessComponent<PaginationProps> = (props) => {
   const className = createClassName(
     props.noDefaultClassName ? null : 'reveal',
     props.className,
@@ -23,9 +23,16 @@ export const Reveal = (props) => {
     generalClassNames(props)
   );
 
-  const passProps = removeProps(props, objectKeys(Reveal.propTypes));
+  const passProps = removeProps(props, objectKeys(Reveal.propTypes!));
 
   return <div {...passProps} className={className} data-reveal/>;
+};
+
+export interface PaginationProps extends FlexboxPropTypes, React.HTMLAttributes<HTMLDivElement> {
+  isTiny?: boolean;
+  isSmall?: boolean;
+  isLarge?: boolean;
+  isFullscreen?: boolean;
 };
 
 Reveal.propTypes = {

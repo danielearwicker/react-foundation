@@ -1,5 +1,5 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import * as React from 'react';
+import * as PropTypes from 'prop-types';
 import { ButtonSizes, ButtonColors } from '../enums';
 import { GeneralPropTypes, FlexboxPropTypes, createClassName, generalClassNames, removeProps, objectKeys, objectValues } from '../utils';
 
@@ -19,6 +19,19 @@ const ButtonPropTypes = {
   isDropdown: PropTypes.bool
 };
 
+export interface ButtonPropsCommon extends FlexboxPropTypes {
+  size?: ButtonSizes;
+  isHollow?: boolean;
+  isExpanded?: boolean;
+  isDisabled?: boolean;
+  isDropdown?: boolean;
+  isArrowOnly?: boolean;
+}
+
+export interface ButtonProps extends ButtonPropsCommon, React.HTMLAttributes<HTMLDivElement> {
+  color?: ButtonColors;  
+}
+
 /**
  * Button component.
  * http://foundation.zurb.com/sites/docs/button.html
@@ -26,13 +39,17 @@ const ButtonPropTypes = {
  * @param {Object} props
  * @returns {Object}
  */
-export const Button = (props) => {
-  const passProps = removeProps(props, objectKeys(Button.propTypes));
+export const Button: React.StatelessComponent<ButtonProps> = (props) => {
+  const passProps = removeProps(props, objectKeys(Button.propTypes!));
 
   return <button {...passProps} className={createButtonClassName(props)}/>;
 };
 
 Button.propTypes = ButtonPropTypes;
+
+export interface LinkProps extends ButtonPropsCommon, React.AnchorHTMLAttributes<HTMLAnchorElement> {
+  color?: ButtonColors;  
+}
 
 /**
  * Link button component.
@@ -41,8 +58,8 @@ Button.propTypes = ButtonPropTypes;
  * @param {Object} props
  * @returns {Object}
  */
-export const Link = (props) => {
-  const passProps = removeProps(props, objectKeys(Button.propTypes));
+export const Link: React.StatelessComponent<LinkProps> = (props) => {
+  const passProps = removeProps(props, objectKeys(Button.propTypes!));
 
   return <a {...passProps} className={createButtonClassName(props)}/>;
 };
@@ -55,7 +72,7 @@ Link.propTypes = ButtonPropTypes;
  * @param {Object} props
  * @returns {string}
  */
-function createButtonClassName(props) {
+function createButtonClassName(props: ButtonProps) {
   return createClassName(
     props.noDefaultClassName ? null : 'button',
     props.className,

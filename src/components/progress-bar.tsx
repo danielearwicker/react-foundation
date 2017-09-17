@@ -1,5 +1,5 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import * as React from 'react';
+import * as PropTypes from 'prop-types';
 import { ProgressColors } from '../enums';
 import { GeneralPropTypes, FlexboxPropTypes, createClassName, generalClassNames, removeProps, objectKeys, objectValues } from '../utils';
 
@@ -10,8 +10,8 @@ import { GeneralPropTypes, FlexboxPropTypes, createClassName, generalClassNames,
  * @param {Object} props
  * @returns {Object}
  */
-export const Progress = (props) => {
-  const { meter: meterProps = {} } = props;
+export const Progress: React.StatelessComponent<PaginationProps> = (props) => {
+  const { meter: meterProps = { text: "" } } = props;
 
   const className = createClassName(
     props.noDefaultClassName ? null : 'progress',
@@ -25,7 +25,7 @@ export const Progress = (props) => {
     meterProps.style.width = `${props.value}%`;
   }
 
-  const passProps = removeProps(props, objectKeys(Progress.propTypes));
+  const passProps = removeProps(props, objectKeys(Progress.propTypes!));
 
   return (
     <div {...passProps}
@@ -38,6 +38,15 @@ export const Progress = (props) => {
       {meterProps.text ? <ProgressMeterWithText {...meterProps} /> : <ProgressMeter {...meterProps} />}
     </div>
   );
+};
+
+export interface PaginationProps extends FlexboxPropTypes, React.HTMLAttributes<HTMLDivElement> { 
+  min?: number;
+  max?: number;
+  value?: number;
+  color?: ProgressColors;
+  valueText?: string;
+  meter?: ProgressMeterWithTextProps;
 };
 
 Progress.propTypes = {
@@ -55,17 +64,19 @@ Progress.propTypes = {
  * @param {Object} props
  * @returns {Object}
  */
-export const ProgressMeter = (props) => {
+export const ProgressMeter: React.StatelessComponent<ProgressMeterProps> = (props) => {
   const className = createClassName(
     props.noDefaultClassName ? null : 'progress-meter',
     props.className,
     generalClassNames(props)
   );
 
-  const passProps = removeProps(props, objectKeys(ProgressMeter.propTypes));
+  const passProps = removeProps(props, objectKeys(ProgressMeter.propTypes!));
 
   return <div {...passProps} className={className}/>;
 };
+
+export interface ProgressMeterProps extends GeneralPropTypes, React.HTMLAttributes<HTMLDivElement> { }
 
 ProgressMeter.propTypes = {
   ...GeneralPropTypes
@@ -77,14 +88,14 @@ ProgressMeter.propTypes = {
  * @param {Object} props
  * @returns {Object}
  */
-export const ProgressMeterWithText = (props) => {
+export const ProgressMeterWithText: React.StatelessComponent<ProgressMeterWithTextProps> = (props) => {
   const className = createClassName(
     props.noDefaultClassName ? null : 'progress-meter',
     props.className,
     generalClassNames(props)
   );
 
-  const passProps = removeProps(props, objectKeys(ProgressMeterWithText.propTypes));
+  const passProps = removeProps(props, objectKeys(ProgressMeterWithText.propTypes!));
 
   return (
     <span {...passProps} className={className}>
@@ -92,6 +103,10 @@ export const ProgressMeterWithText = (props) => {
     </span>
   );
 };
+
+export interface ProgressMeterWithTextProps extends FlexboxPropTypes, React.HTMLAttributes<HTMLSpanElement> { 
+  text: string;
+}
 
 ProgressMeterWithText.propTypes = {
   ...GeneralPropTypes,
@@ -105,17 +120,21 @@ ProgressMeterWithText.propTypes = {
  * @param {Object} props
  * @returns {Object}
  */
-export const ProgressMeterText = (props) => {
+export const ProgressMeterText: React.StatelessComponent<ProgressMeterTextProps> = (props) => {
   const className = createClassName(
     props.noDefaultClassName ? null : 'progress-meter-text',
     props.className,
     generalClassNames(props)
   );
 
-  const passProps = removeProps(props, objectKeys(ProgressMeterText.propTypes));
+  const passProps = removeProps(props, objectKeys(ProgressMeterText.propTypes!));
 
   return <p {...passProps} className={className}/>;
 };
+
+export interface ProgressMeterTextProps extends FlexboxPropTypes, React.HTMLAttributes<HTMLParagraphElement> { 
+  children?: string;
+}
 
 ProgressMeterText.propTypes = {
   ...GeneralPropTypes
@@ -127,16 +146,22 @@ ProgressMeterText.propTypes = {
  *
  * @returns {Object}
  */
-export const NativeProgress = (props) => {
+export const NativeProgress: React.StatelessComponent<NativeProgressProps> = (props) => {
   const className = createClassName(
     props.className,
     props.color,
     generalClassNames(props)
   );
 
-  const passProps = removeProps(props, objectKeys(NativeProgress.propTypes));
+  const passProps = removeProps(props, objectKeys(NativeProgress.propTypes!));
 
   return <progress {...passProps} max={props.max} value={props.value} className={className}/>;
+};
+
+export interface NativeProgressProps extends FlexboxPropTypes, React.ProgressHTMLAttributes<HTMLProgressElement> {
+  max?: number;
+  value?: number;
+  color?: ProgressColors;
 };
 
 NativeProgress.propTypes = {

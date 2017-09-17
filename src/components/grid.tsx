@@ -1,5 +1,5 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import * as React from 'react';
+import * as PropTypes from 'prop-types';
 import { HorizontalAlignments, VerticalAlignments } from '../enums';
 import { GeneralPropTypes, FlexboxPropTypes, createClassName, generalClassNames, removeProps, objectKeys, isDefined } from '../utils';
 
@@ -9,7 +9,7 @@ import { GeneralPropTypes, FlexboxPropTypes, createClassName, generalClassNames,
  * @param {Object} props
  * @returns {Object}
  */
-export const Row = (props) => {
+export const Row: React.StatelessComponent<RowProps> = (props) => {
   const className = createClassName(
     props.noDefaultClassName ? null : 'row',
     props.className,
@@ -41,10 +41,30 @@ export const Row = (props) => {
     generalClassNames(props)
   );
 
-  const passProps = removeProps(props, objectKeys(Row.propTypes));
+  const passProps = removeProps(props, objectKeys(Row.propTypes!));
 
   return <div {...passProps} className={className}/>;
 };
+
+export interface RowProps extends FlexboxPropTypes, React.HTMLAttributes<HTMLDivElement> {  
+  upOnSmall?: number;
+  upOnMedium?: number;
+  upOnLarge?: number;
+  horizontalAlignment?: string;
+  verticalAlignment?: string;
+  unstackOnSmall?: boolean;
+  unstackOnMedium?: boolean;
+  unstackOnLarge?: boolean;
+  collapseOnSmall?: boolean;
+  collapseOnMedium?: boolean;
+  collapseOnLarge?: boolean;
+  uncollapseOnSmall?: boolean;
+  uncollapseOnMedium?: boolean;
+  uncollapseOnLarge?: boolean;
+  isCollapsed?: boolean;
+  isExpanded?: boolean;
+  isColumn?: boolean;
+}
 
 Row.propTypes = {
   ...GeneralPropTypes,
@@ -74,7 +94,7 @@ Row.propTypes = {
  * @param {Object} props
  * @returns {Object}
  */
-export const Column = (props) => {
+export const Column: React.StatelessComponent<ColumnProps> = (props) => {
   const defaultClassName = props.isColumn ? 'column' : 'columns';
   const className = createClassName(
     props.noDefaultClassName ? null : defaultClassName,
@@ -110,9 +130,40 @@ export const Column = (props) => {
     generalClassNames(props)
   );
 
-  const passProps = removeProps(props, objectKeys(Column.propTypes));
+  const passProps = removeProps(props, objectKeys(Column.propTypes!));
 
   return <div {...passProps} className={className}/>;
+};
+
+export interface ColumnProps extends FlexboxPropTypes, React.HTMLAttributes<HTMLDivElement> {
+  upOnSmall?: number;
+  small?: number;
+  medium?: number;
+  large?: number;
+  offsetOnSmall?: number;
+  offsetOnMedium?: number;
+  offsetOnLarge?: number;
+  pushOnSmall?: number;
+  pushOnMedium?: number;
+  pushOnLarge?: number;
+  pullOnSmall?: number;
+  pullOnMedium?: number;
+  pullOnLarge?: number;
+  orderOnSmall?: number;
+  orderOnMedium?: number;
+  orderOnLarge?: number;
+  centerOnSmall?: boolean;
+  centerOnMedium?: boolean;
+  centerOnLarge?: boolean;
+  uncenterOnSmall?: boolean;
+  uncenterOnMedium?: boolean;
+  uncenterOnLarge?: boolean;
+  expandOnSmall?: boolean;
+  expandOnMedium?: boolean;
+  expandOnLarge?: boolean;
+  isShrunk?: boolean;
+  isLast?: boolean;
+  isColumn?: boolean;
 };
 
 Column.propTypes = {

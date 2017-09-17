@@ -1,16 +1,13 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import * as React from 'react';
+import * as PropTypes from 'prop-types';
 import { BadgeColors } from '../enums';
 import { GeneralPropTypes, FlexboxPropTypes, createClassName, generalClassNames, removeProps, objectKeys, objectValues } from '../utils';
 
 /**
  * Badge component.
  * http://foundation.zurb.com/sites/docs/badge.html
- *
- * @param {Object} props
- * @returns {Object}
  */
-export const Badge = (props) => {
+export const Badge: React.StatelessComponent<BadgeProps> = (props) => {
   const className = createClassName(
     props.noDefaultClassName ? null : 'badge',
     props.className,
@@ -18,9 +15,13 @@ export const Badge = (props) => {
     generalClassNames(props)
   );
 
-  const passProps = removeProps(props, objectKeys(Badge.propTypes));
+  const passProps = removeProps(props, objectKeys(Badge.propTypes!));
 
   return <span {...passProps} className={className}/>;
+};
+
+export interface BadgeProps extends FlexboxPropTypes, React.HTMLAttributes<HTMLSpanElement> {
+  color?: BadgeColors;
 };
 
 Badge.propTypes = {

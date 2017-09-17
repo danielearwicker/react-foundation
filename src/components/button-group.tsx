@@ -1,5 +1,5 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import * as React from 'react';
+import * as PropTypes from 'prop-types';
 import { Breakpoints, ButtonGroupColors, ButtonGroupSizes } from '../enums';
 import { GeneralPropTypes, FlexboxPropTypes, createClassName, generalClassNames, removeProps, objectKeys, objectValues } from '../utils';
 
@@ -10,7 +10,7 @@ import { GeneralPropTypes, FlexboxPropTypes, createClassName, generalClassNames,
  * @param {Object} props
  * @returns {Object}
  */
-export const ButtonGroup = (props) => {
+export const ButtonGroup: React.StatelessComponent<ButtonGroupProps> = (props) => {
   const className = createClassName(
     props.noDefaultClassName ? null : 'button-group',
     props.className,
@@ -26,9 +26,17 @@ export const ButtonGroup = (props) => {
     generalClassNames(props)
   );
 
-  const passProps = removeProps(props, objectKeys(ButtonGroup.propTypes));
+  const passProps = removeProps(props, objectKeys(ButtonGroup.propTypes!));
 
   return <div {...passProps} className={className}/>;
+};
+
+export interface ButtonGroupProps extends FlexboxPropTypes, React.HTMLAttributes<HTMLDivElement> {
+  color?: ButtonGroupColors;
+  size?: ButtonGroupSizes;
+  stackFor?: Breakpoints;
+  isExpanded?: boolean;
+  isStacked?: boolean;
 };
 
 ButtonGroup.propTypes = {

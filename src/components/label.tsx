@@ -1,5 +1,5 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import * as React from 'react';
+import * as PropTypes from 'prop-types';
 import { LabelColors } from '../enums';
 import { GeneralPropTypes, FlexboxPropTypes, createClassName, generalClassNames, removeProps, objectKeys, objectValues } from '../utils';
 
@@ -10,7 +10,7 @@ import { GeneralPropTypes, FlexboxPropTypes, createClassName, generalClassNames,
  * @param {Object} props
  * @returns {Object}
  */
-export const Label = (props) => {
+export const Label: React.StatelessComponent<LabelProps> = (props) => {
   const className = createClassName(
     props.noDefaultClassName ? null : 'label',
     props.className,
@@ -18,9 +18,13 @@ export const Label = (props) => {
     generalClassNames(props)
   );
 
-  const passProps = removeProps(props, objectKeys(Label.propTypes));
+  const passProps = removeProps(props, objectKeys(Label.propTypes!));
 
   return <span {...passProps} className={className}/>;
+};
+
+export interface LabelProps extends FlexboxPropTypes, React.HTMLAttributes<HTMLSpanElement> { 
+  color?: LabelColors;
 };
 
 Label.propTypes = {

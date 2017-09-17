@@ -1,5 +1,5 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import * as React from 'react';
+import * as PropTypes from 'prop-types';
 import { SwitchSizes, SwitchInputTypes } from '../enums';
 import { GeneralPropTypes, FlexboxPropTypes, createClassName, generalClassNames, removeProps, objectValues } from '../utils';
 
@@ -12,7 +12,7 @@ let currentId = 0;
  * @param {Object} props
  * @returns {Object}
  */
-export const Switch = props => {
+export const Switch: React.StatelessComponent<SwitchProps> = props => {
   const className = createClassName(
     props.noDefaultClassName ? null : 'switch',
     props.className,
@@ -35,6 +35,15 @@ export const Switch = props => {
   );
 };
 
+export interface SwitchProps extends FlexboxPropTypes, React.HTMLAttributes<HTMLDivElement> {
+  size?: SwitchSizes;
+  id?: string;
+  input?: SwitchInputProps;
+  paddle?: SwitchPaddleProps;
+  active?: SwitchActiveProps;
+  inactive?: SwitchInactiveProps; 
+};
+
 Switch.propTypes = {
   ...GeneralPropTypes,
   ...FlexboxPropTypes,
@@ -48,7 +57,7 @@ Switch.propTypes = {
  * @param {Object} props
  * @returns {Object}
  */
-export const SwitchInput = props => {
+export const SwitchInput: React.StatelessComponent<SwitchInputProps> = props => {
   const className = createClassName(
     props.noDefaultClassName ? null : 'switch-input',
     props.className,
@@ -58,6 +67,11 @@ export const SwitchInput = props => {
   return (
     <input {...removeProps(props, ['type'])} className={className} type={props.type || SwitchInputTypes.CHECKBOX}/>
   );
+};
+
+export interface SwitchInputProps extends GeneralPropTypes, React.InputHTMLAttributes<HTMLInputElement> {
+  type?: SwitchInputTypes;
+  id?: string;
 };
 
 SwitchInput.propTypes = {
@@ -71,7 +85,7 @@ SwitchInput.propTypes = {
  * @param {Object} props
  * @returns {Object}
  */
-export const SwitchPaddle = props => {
+export const SwitchPaddle: React.StatelessComponent<SwitchPaddleProps> = props => {
   const className = createClassName(
     props.noDefaultClassName ? null : 'switch-paddle',
     props.className,
@@ -83,13 +97,15 @@ export const SwitchPaddle = props => {
   );
 };
 
+export interface SwitchPaddleProps extends GeneralPropTypes, React.LabelHTMLAttributes<HTMLLabelElement> { }
+
 /**
  * Switch active sub-component.
  *
  * @param {Object} props
  * @returns {Object}
  */
-export const SwitchActive = props => {
+export const SwitchActive: React.StatelessComponent<SwitchActiveProps> = props => {
   const className = createClassName(
     props.noDefaultClassName ? null : 'switch-active',
     props.className,
@@ -101,13 +117,17 @@ export const SwitchActive = props => {
   );
 };
 
+export interface SwitchActiveProps extends GeneralPropTypes, React.HTMLAttributes<HTMLSpanElement> { 
+  text?: string;
+}
+
 /**
  * Switch inactive sub-component.
  *
  * @param {Object} props
  * @returns {Object}
  */
-export const SwitchInactive = props => {
+export const SwitchInactive: React.StatelessComponent<SwitchInactiveProps> = props => {
   const className = createClassName(
     props.noDefaultClassName ? null : 'switch-inactive',
     props.className,
@@ -118,3 +138,7 @@ export const SwitchInactive = props => {
     <span {...props} className={className} aria-hidden="true">{props.text}</span>
   );
 };
+
+export interface SwitchInactiveProps extends GeneralPropTypes, React.HTMLAttributes<HTMLSpanElement> { 
+  text?: string;
+}

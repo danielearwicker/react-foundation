@@ -1,5 +1,6 @@
-import React, { Component } from 'react';
-import classNames from 'classnames';
+import * as React from 'react';
+import { Component } from 'react';
+import * as classNames from 'classnames';
 
 // TODO: Add support for changing the values.
 
@@ -7,7 +8,7 @@ import classNames from 'classnames';
  * Slider component.
  * http://foundation.zurb.com/sites/docs/slider.html
  */
-export class Slider extends Component {
+export class Slider extends Component<SliderProps, SliderState> {
   constructor() {
     super();
 
@@ -30,11 +31,21 @@ export class Slider extends Component {
   }
 }
 
+export interface SliderProps extends React.HTMLAttributes<HTMLDivElement>, SliderCommonProps {  
+  initialStart?: number;
+  fill?: SliderFillProps;
+  handle?: React.CSSProperties;
+};
+
+export interface SliderState {
+  value: number;
+}
+
 /**
  * Two-handle slider component.
  * http://foundation.zurb.com/sites/docs/slider.html#two-handles
  */
-export class TwoHandleSlider extends Component {
+export class TwoHandleSlider extends Component<TwoHandleSliderProps, TwoHandleSliderState> {
   constructor() {
     super();
 
@@ -61,13 +72,26 @@ export class TwoHandleSlider extends Component {
   }
 }
 
+export interface TwoHandleSliderProps extends React.HTMLAttributes<HTMLDivElement>, SliderCommonProps {
+  initialStart?: number;
+  initialEnd?: number;
+  minHandle?: React.CSSProperties;
+  maxHandle?: React.CSSProperties;
+  fill?: SliderFillProps;
+};
+
+export interface TwoHandleSliderState {
+  minValue: number;
+  maxValue: number;
+}
+
 /**
  * Slider handle sub-component.
  *
  * @param {Object} props
  * @returns {XML}
  */
-export const SliderHandle = props => {
+export const SliderHandle: React.StatelessComponent<SliderHandle> = props => {
   return (
     <span>
       <span {...props} role="slider"/>
@@ -76,15 +100,27 @@ export const SliderHandle = props => {
   );
 };
 
+export interface SliderHandle extends React.HTMLAttributes<HTMLSpanElement> { }
+
+export interface SliderFillProps {
+  className?: string;
+}
+
 /**
  * Slider fill sub-component.
  *
  * @param {Object} props
  * @returns {XML}
  */
-export const SliderFill = props => (
+export const SliderFill: React.StatelessComponent<SliderFillProps> = props => (
   <span className={props.className || 'slider-fill'}/>
 );
+
+export interface SliderCommonProps {
+  className?: string;
+  isVertical?: boolean;
+  isDisabled?: boolean;
+}
 
 /**
  * Creates the slider class name from the given properties.
@@ -93,7 +129,7 @@ export const SliderFill = props => (
  * @param {Object} props
  * @returns {string}
  */
-function classNameFromProps(props) {
+function classNameFromProps(props: SliderCommonProps) {
   return classNames(
     props.className || 'slider',
     {

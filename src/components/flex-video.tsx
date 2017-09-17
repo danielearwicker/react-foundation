@@ -1,6 +1,11 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import * as React from 'react';
+import * as PropTypes from 'prop-types';
 import { GeneralPropTypes, FlexboxPropTypes, createClassName, generalClassNames, removeProps, objectKeys } from '../utils';
+
+export interface FlexVideoProps extends FlexboxPropTypes, React.HTMLAttributes<HTMLDivElement> {
+  isWidescreen?: boolean;
+  isVimeo?: boolean;
+}
 
 /**
  * FlexVideo component.
@@ -9,7 +14,7 @@ import { GeneralPropTypes, FlexboxPropTypes, createClassName, generalClassNames,
  * @param {Object} props
  * @returns {Object}
  */
-export const FlexVideo = (props) => {
+export const FlexVideo: React.StatelessComponent<FlexVideoProps> = (props) => {
   const className = createClassName(
     props.noDefaultClassName ? null : 'flex-video',
     props.className,
@@ -20,7 +25,7 @@ export const FlexVideo = (props) => {
     generalClassNames(props)
   );
 
-  const passProps = removeProps(props, objectKeys(FlexVideo.propTypes));
+  const passProps = removeProps(props, objectKeys(FlexVideo.propTypes!));
 
   return <div {...passProps} className={className}/>;
 };

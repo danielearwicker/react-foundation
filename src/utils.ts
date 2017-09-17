@@ -1,6 +1,11 @@
-import PropTypes from 'prop-types';
-import classNames from 'classnames';
+import * as PropTypes from 'prop-types';
+import * as classNames from 'classnames';
 import { Breakpoints, FloatTypes, HorizontalAlignments, VerticalAlignments, SpaceControls, ExtendedBreakpoints } from './enums';
+
+export interface ClassNameProps {
+  noDefaultClassName?: string;
+  className?: string;
+}
 
 /**
  * Property types for general properties.
@@ -22,23 +27,35 @@ export const GeneralPropTypes = {
   float: PropTypes.oneOf(objectValues(FloatTypes))
 };
 
+export interface GeneralPropTypes extends ClassNameProps {
+  showFor?: Breakpoints.MEDIUM | Breakpoints.LARGE;
+  showOnlyFor?: Breakpoints;
+  hideFor?: "medium" | "large";
+  hideOnlyFor?: Breakpoints;
+  isHidden?: boolean;
+  isInvisible?: boolean;
+  showForLandscape?: boolean;
+  showForPortrait?: boolean;
+  showForSr?: boolean;
+  showOnFocus?: boolean;
+  isClearfix?: boolean;
+  float?: FloatTypes;
+}
+
 /**
  * Creates class names from the given arguments.
  *
  * @param {*} args
  * @returns {string}
  */
-export function createClassName(...args) {
+export function createClassName(...args: any[]) {
   return classNames(...args);
 }
 
 /**
  * Parses the general class names from the given properties.
- *
- * @param {Object} props
- * @returns {Object}
  */
-export function generalClassNames(props) {
+export function generalClassNames(props: GeneralPropTypes) {
   return {
     'show-for-medium': props.showFor === Breakpoints.MEDIUM,
     'show-for-large': props.showFor === Breakpoints.LARGE,
@@ -66,11 +83,8 @@ export function generalClassNames(props) {
 /**
  * Returns the keys for the given object.
  * This method is used for getting the keys for prop types.
- *
- * @param {Object} object
- * @returns {Array}
- */
-export function objectKeys(object) {
+  */
+export function objectKeys(object: object) {
   return Object.keys(object);
 }
 
@@ -81,12 +95,12 @@ export function objectKeys(object) {
  * @param {Object} object
  * @returns {Array}
  */
-export function objectValues(object) {
+export function objectValues(object: object) {
   const values = [];
 
   for (const property in object) {
     if (object.hasOwnProperty(property)) {
-      values.push(object[property]);
+      values.push((object as any)[property]);
     }
   }
 
@@ -101,12 +115,12 @@ export function objectValues(object) {
  * @param {Array} remove
  * @returns {Object}
  */
-export function removeProps(object, remove) {
-  const result = {};
+export function removeProps(object: object, remove: string[]): object {
+  const result: any = {};
 
   for (const property in object) {
     if (object.hasOwnProperty(property) && remove.indexOf(property) === -1) {
-      result[property] = object[property];
+      result[property] = (object as any)[property];
     }
   }
 
@@ -119,7 +133,7 @@ export function removeProps(object, remove) {
  * @param {*} value
  * @returns {boolean}
  */
-export function isDefined(value) {
+export function isDefined(value: any) {
   return typeof value !== 'undefined';
 }
 
@@ -130,7 +144,7 @@ export function isDefined(value) {
  * @param {String} size
  * @returns {string}
  */
-export function addBreakpoint(prop, size) {
+export function addBreakpoint(prop: string, size: string) {
   return size === 'all' ? prop : `${size}-${prop}`;
 }
 
@@ -141,7 +155,7 @@ export function addBreakpoint(prop, size) {
  * @param {String} gutters
  * @returns {string}
  */
-export function setDirection(isVertical, gutters = null) {
+export function setDirection(isVertical?: boolean, gutters: string|null = null) {
   if (gutters) {
     return isVertical === true ? `grid-${gutters}-y` : `grid-${gutters}-x`;
   } else {
@@ -174,24 +188,42 @@ export const FlexboxPropTypes = {
   flexOrderLarge: PropTypes.number,
 };
 
+export interface FlexboxPropTypes extends GeneralPropTypes {
+  alignX?: HorizontalAlignments;
+  alignY?: VerticalAlignments;
+  selfAlignX?: HorizontalAlignments;
+  selfAlignY?: VerticalAlignments;
+  centerAlign?: boolean;
+  flexContainer?: boolean;
+  flexDirRow?: ExtendedBreakpoints;
+  flexDirRowRev?: ExtendedBreakpoints;
+  flexDirCol?: ExtendedBreakpoints;
+  flexDirColRev?: ExtendedBreakpoints;
+  flexChild?: SpaceControls;
+  flexOrder?: number;
+  flexOrderSmall?: number;
+  flexOrderMedium?: number;
+  flexOrderLarge?: number;
+};
+
 /**
  * Parses the flexbox class names from the given properties.
  *
  * @param {Object} props
  * @returns {Object}
  */
-export function flexboxClassNames(props) {
-  const flexClassNames = {
+export function flexboxClassNames(props: FlexboxPropTypes) {
+  const flexClassNames: { [name: string]: boolean | undefined } = {
     'flex-container': props.flexContainer,
     'align-center-middle': props.centerAlign,
   };
 
   if (isDefined(props.alignX)) flexClassNames[`align-${props.alignX}`] = true;
   if (isDefined(props.alignY)) flexClassNames[`align-${props.alignY}`] = true;
-  if (isDefined(props.flexDirRow)) flexClassNames[addBreakpoint('flex-dir-row', props.flexDirRow)] = true;
-  if (isDefined(props.flexDirRowRev)) flexClassNames[addBreakpoint('flex-dir-row-reverse', props.flexDirRowRev)] = true;
-  if (isDefined(props.flexDirCol)) flexClassNames[addBreakpoint('flex-dir-column', props.flexDirCol)] = true;
-  if (isDefined(props.flexDirColRev)) flexClassNames[addBreakpoint('flex-dir-column-reverse', props.flexDirColRev)] = true;
+  if (isDefined(props.flexDirRow)) flexClassNames[addBreakpoint('flex-dir-row', props.flexDirRow!)] = true;
+  if (isDefined(props.flexDirRowRev)) flexClassNames[addBreakpoint('flex-dir-row-reverse', props.flexDirRowRev!)] = true;
+  if (isDefined(props.flexDirCol)) flexClassNames[addBreakpoint('flex-dir-column', props.flexDirCol!)] = true;
+  if (isDefined(props.flexDirColRev)) flexClassNames[addBreakpoint('flex-dir-column-reverse', props.flexDirColRev!)] = true;
   if (isDefined(props.flexChild)) flexClassNames[`flex-child-${props.flexChild}`] = true;
   if (isDefined(props.flexOrder)) flexClassNames[`order-${props.flexOrder}`] = true;
   if (isDefined(props.flexOrderSmall)) flexClassNames[`small-order-${props.flexOrder}`] = true;

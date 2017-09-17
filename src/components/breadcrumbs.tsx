@@ -1,5 +1,5 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import * as React from 'react';
+import * as PropTypes from 'prop-types';
 import { GeneralPropTypes, FlexboxPropTypes, createClassName, generalClassNames, removeProps, objectKeys } from '../utils';
 
 /**
@@ -9,17 +9,19 @@ import { GeneralPropTypes, FlexboxPropTypes, createClassName, generalClassNames,
  * @param {Object} props
  * @returns {Object}
  */
-export const Breadcrumbs = (props) => {
+export const Breadcrumbs: React.StatelessComponent<BreadcrumbsProps> = (props) => {
   const className = createClassName(
     props.noDefaultClassName ? null : 'breadcrumbs',
     props.className,
     generalClassNames(props)
   );
 
-  const passProps = removeProps(props, objectKeys(Breadcrumbs.propTypes));
+  const passProps = removeProps(props, objectKeys(Breadcrumbs.propTypes!));
 
   return <ul {...passProps} className={className}/>;
 };
+
+export interface BreadcrumbsProps extends GeneralPropTypes, React.HTMLAttributes<HTMLUListElement> { }  
 
 Breadcrumbs.propTypes = {
   ...GeneralPropTypes
@@ -31,7 +33,7 @@ Breadcrumbs.propTypes = {
  * @param {Object} props
  * @returns {Object}
  */
-export const BreadcrumbItem = (props) => {
+export const BreadcrumbItem: React.StatelessComponent<BreadcrumbItemProps> = (props) => {
   const className = createClassName(
     props.className,
     {
@@ -40,9 +42,13 @@ export const BreadcrumbItem = (props) => {
     generalClassNames(props)
   );
 
-  const passProps = removeProps(props, objectKeys(BreadcrumbItem.propTypes));
+  const passProps = removeProps(props, objectKeys(BreadcrumbItem.propTypes!));
 
   return <li {...passProps} className={className}/>;
+};
+
+export interface BreadcrumbItemProps extends FlexboxPropTypes, React.HTMLAttributes<HTMLLIElement> { 
+  isDisabled?: boolean;
 };
 
 BreadcrumbItem.propTypes = {

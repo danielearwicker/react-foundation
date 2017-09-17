@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from 'react';
 import { GeneralPropTypes, FlexboxPropTypes, createClassName, generalClassNames, removeProps, objectKeys } from '../utils';
 
 /**
@@ -8,17 +8,20 @@ import { GeneralPropTypes, FlexboxPropTypes, createClassName, generalClassNames,
  * @param {Object} props
  * @returns {Object}
  */
-export const Thumbnail = (props) => {
+export const Thumbnail: React.StatelessComponent<ThumbnailProps> = (props) => {
   const className = createClassName(
     props.noDefaultClassName ? null : 'thumbnail',
     props.className,
     generalClassNames(props)
   );
 
-  const passProps = removeProps(props, objectKeys(Thumbnail.propTypes));
+  const passProps = removeProps(props, objectKeys(Thumbnail.propTypes!));
 
   return <img {...passProps} className={className}/>;
 };
+
+
+export interface ThumbnailProps extends FlexboxPropTypes, React.ImgHTMLAttributes<HTMLImageElement> { }
 
 Thumbnail.propTypes = {
   ...GeneralPropTypes,
@@ -32,7 +35,7 @@ Thumbnail.propTypes = {
  * @param {Object} props
  * @returns {Object}
  */
-export const ThumbnailLink = (props) => {
+export const ThumbnailLink: React.StatelessComponent<ThumbnailProps> = (props) => {
   const className = createClassName(
     props.noDefaultClassName ? null : 'thumbnail',
     props.className,
@@ -41,7 +44,7 @@ export const ThumbnailLink = (props) => {
 
   // TODO: Consider improving how properties are set for both the link and image.
 
-  const passProps = removeProps(props, objectKeys(ThumbnailLink.propTypes));
+  const passProps = removeProps(props, objectKeys(ThumbnailLink.propTypes!));
 
   return <a className={className}><img {...passProps}/></a>;
 };
