@@ -54,7 +54,7 @@ export const Grid: React.StatelessComponent<GridProps> = (props) => {
     isDefined(props.collapseOnSmall) ? `small-${props.collapseOnSmall}-collapse` : null,
     isDefined(props.collapseOnMedium) ? `medium-${props.collapseOnMedium}-collapse` : null,
     isDefined(props.collapseOnLarge) ? `large-${props.collapseOnLarge}-collapse` : null,
-    isDefined(props.gridFrame) ? addBreakpoint('grid-frame', props.gridFrame) : null,
+    isDefined(props.gridFrame) ? addBreakpoint('grid-frame', props.gridFrame!) : null,
     generalClassNames(props)
   );
 
@@ -102,8 +102,8 @@ export const Cell: React.StatelessComponent<CellProps> = (props) => {
     props.small ? `small-${props.small}` : null,
     props.medium ? `medium-${props.medium}` : null,
     props.large ? `large-${props.large}` : null,
-    isDefined(props.auto) ? addBreakpoint('auto', props.auto) : null,
-    isDefined(props.shrink) ? addBreakpoint('shrink', props.shrink) : null,
+    isDefined(props.auto) ? addBreakpoint('auto', props.auto!) : null,
+    isDefined(props.shrink) ? addBreakpoint('shrink', props.shrink!) : null,
     isDefined(props.offsetOnSmall) ? `small-offset-${props.offsetOnSmall}` : null,
     isDefined(props.offsetOnMedium) ? `medium-offset-${props.offsetOnMedium}` : null,
     isDefined(props.offsetOnLarge) ? `large-offset-${props.offsetOnLarge}` : null,

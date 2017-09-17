@@ -1,8 +1,8 @@
-// Type definitions for react-foundation 0.9.2
+// Type definitions for react-foundation 0.9
 // Project: https://github.com/digiaonline/react-foundation
 // Definitions by: Daniel Earwicker <https://github.com/danielearwicker/react-foundation>
 // Definitions: https://github.com/DefinitelyTyped/DefinitelyTyped
-// TypeScript Version: 2.4
+// TypeScript Version: 2.3
 
 export { Accordion, AccordionItem, AccordionTitle, AccordionContent } from './components/accordion';
 export { Badge } from './components/badge';
@@ -28,3 +28,5 @@ export { Tabs, TabItem, TabsContent, TabPanel } from './components/tabs';
 export { TopBar, TopBarTitle, TopBarLeft, TopBarRight } from './components/top-bar';
 export { GridContainer, Grid, Cell } from './components/xy-grid';
 export { Breakpoints, Colors, Sizes, Alignments, FloatTypes, InputTypes, GutterTypes, ExtendedBreakpoints, SpaceControls } from './enums';
+
+export { Slider, TwoHandleSlider, SliderHandle, SliderFill } from './components/slider';

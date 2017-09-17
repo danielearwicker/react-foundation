@@ -28,7 +28,7 @@ export const GeneralPropTypes = {
 };
 
 export interface GeneralPropTypes extends ClassNameProps {
-  showFor?: Breakpoints.MEDIUM | Breakpoints.LARGE;
+  showFor?: Breakpoints;
   showOnlyFor?: Breakpoints;
   hideFor?: "medium" | "large";
   hideOnlyFor?: Breakpoints;
